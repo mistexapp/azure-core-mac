@@ -73,6 +73,8 @@ generate2()
 EOF
 }
 
+echo "hostname="$Hostname"\nusername="$Username"\nserialnumber="$SerialNumber""
+
 #_____________________________________________________________________________________________________________
 curl --request POST \
 "$url/api/v2/write?org=ITS&bucket=$bucket&precision=s" \
