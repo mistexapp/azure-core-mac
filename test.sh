@@ -1,3 +1,5 @@
 #!/bin/sh
 
-echo "test var is $variable1"
+echo "token var is $token"
+echo "repo var is $repo"
+echo "url var is $url"
