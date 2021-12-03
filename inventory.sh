@@ -73,14 +73,19 @@ generate2()
 EOF
 }
 
-echo "hostname="$Hostname"\nusername="$Username"\nserialnumber="$SerialNumber""
-
 #_____________________________________________________________________________________________________________
-curl --request POST \
+status_code=$(curl -s --write-out "%{http_code}\n" --request POST \
 "$url/api/v2/write?org=ITS&bucket=$bucket&precision=s" \
     --header "Authorization: Token $token" \
     --header "Content-Type: text/plain; charset=utf-8" \
     --header "Accept: application/json" \
     --data-binary "$(generate2)"
+    )
+
+if [ "$status_code" -ne 204 ]; then
+    echo "ERROR: Status:$status_code"
+else
+    echo "DONE. Status:$status_code"
+fi
 
 exit 0
