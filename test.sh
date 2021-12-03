@@ -1,3 +1,3 @@
-#!/bin/bash
+#!/bin/sh
 
-launchctl getenv variable
+echo "test var is $variable1"
