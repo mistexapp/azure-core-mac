@@ -61,7 +61,7 @@ else
 fi
 
 #_____________________________________________________________________________________________________________
-generate2()
+generate()
 {
     cat <<EOF
     General,host=$SerialNumber hostname="$Hostname",username="$Username",serialnumber="$SerialNumber",version="$Version",laptop="$Laptop",encryption="$os_encryption" $timestamp
@@ -79,7 +79,7 @@ status_code=$(curl -s --write-out "%{http_code}\n" --request POST \
     --header "Authorization: Token $token" \
     --header "Content-Type: text/plain; charset=utf-8" \
     --header "Accept: application/json" \
-    --data-binary "$(generate2)"
+    --data-binary "$(generate)"
     )
 
 if [ "$status_code" -ne 204 ]; then
