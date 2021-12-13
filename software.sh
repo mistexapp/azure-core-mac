@@ -11,12 +11,13 @@ f_timestamp=$(date +%d-%m-%y_%H:%M)
 cd /Applications
 files=(*.app)
 
-string="Software,host=$SerialNumber version_software='$version_software',"
+string="Software,host=$SerialNumber version_software=\"$version_software\","
 for file in "${files[@]}"; do
     value=`plutil -p "/Applications/$file/Contents/Info.plist" | grep CFBundleShortVersionString`
-    app=$(echo "${file//.app/}" | tr -d ' ' | tr -d '.' | sed 's/[1-9]//g')
-    app_ver=$(echo "${value##*>}" | tr -d '"' | tr -d ' ')
-    string+="$app='$app_ver',"
+    app=$(echo "${file//.app/}" | tr '[:upper:]' '[:lower:]' | tr -d ' ' | sed 's/[1-9]//g' | sed 's/[<>.,!@#$%^&*()-+=_`~±§]//g')
+    app_ver=$(echo "${value##*>}" | tr -d '"' | tr -d ' ' | sed -r 's/[(].*//g')
+    string+="$app=\"$app_ver\"",
+    #string=$(echo $string | sed -e "s/$app_ver/"$app_ver"/g")
 done
 string+=" $timestamp"
 software=$(echo $string | sed -e "s/, $timestamp/ $timestamp/g")
