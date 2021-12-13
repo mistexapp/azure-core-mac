@@ -23,7 +23,6 @@ RunTest()
 }
 
 if test -f "$exec_file"; then
-    echo "$exec_file exists."
     resp=$(RunTest)
 else 
     curl https://install.speedtest.net/app/cli/ookla-speedtest-1.0.0-macosx.tgz --output $path/Speedtest/ookla-speedtest.tgz
