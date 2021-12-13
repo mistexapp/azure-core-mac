@@ -14,14 +14,14 @@ files=(*.app)
 string="Software,host=$SerialNumber version_software='$version_software',"
 for file in "${files[@]}"; do
     value=`plutil -p "/Applications/$file/Contents/Info.plist" | grep CFBundleShortVersionString`
-    #echo "${file//.app/}: ${value##*>}" | tr -d '"'
-    app=$(echo "${file//.app/}" | tr -d ' ' | tr -d '.')
+    app=$(echo "${file//.app/}" | tr -d ' ' | tr -d '.' | sed 's/[1-9]//g')
     app_ver=$(echo "${value##*>}" | tr -d '"' | tr -d ' ')
     string+="$app='$app_ver',"
 done
 string+=" $timestamp"
 software=$(echo $string | sed -e "s/, $timestamp/ $timestamp/g")
 
+echo $software
 #_____________________________________________________________________________________________________________
 status_code=$(curl -s --write-out "%{http_code}\n" --request POST \
 "$url/api/v2/write?org=ITS&bucket=$bucket&precision=s" \
