@@ -22,7 +22,6 @@ done
 string+=" $timestamp"
 software=$(echo $string | sed -e "s/, $timestamp/ $timestamp/g")
 
-echo $software
 #_____________________________________________________________________________________________________________
 status_code=$(curl -s --write-out "%{http_code}\n" --request POST \
 "$url/api/v2/write?org=ITS&bucket=$bucket&precision=s" \
