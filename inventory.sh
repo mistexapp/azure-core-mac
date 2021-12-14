@@ -64,7 +64,7 @@ fi
 generate()
 {
     cat <<EOF
-    General,host=$SerialNumber hostname="$Hostname",username="$Username",serialnumber="$SerialNumber",version="$Version",laptop="$Laptop",encryption="$os_encryption" $timestamp
+    General,host=$SerialNumber hostname="$Hostname",username="$Username",serialnumber="$SerialNumber",version="$Version",laptop="$Laptop",encryption="$os_encryption",request="$timestamp" $timestamp
     CPU,host=$SerialNumber cpu_model="$CPU_Model",cpu_usage="$CPU_Usage",cpu_cores="$CPU_Cores",cpu_threads="$CPU_Threads" $timestamp
     Memory,host=$SerialNumber mem_capacity="$RAM_Capacity",mem_manufacturer="$RAM_Manufacturer",mem_usage="$Ram_Usage",mem_speed="$RAM_Speed" $timestamp
     Battery,host=$SerialNumber batt_charging="$battery_charging",batt_capacity="$battery_capacity" $timestamp
