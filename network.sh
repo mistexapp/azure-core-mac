@@ -15,6 +15,8 @@ f_timestamp=$(date +%d-%m-%y_%H:%M)
 
 #_____________________________________________________________________________________________________________
 # Network
+killall -9 speedtest
+
 
 RunTest()
 {
@@ -80,5 +82,5 @@ if [ "$status_code" -ne 204 ]; then
 else
     echo "DONE. Status:$status_code"
 fi
-
+killall -9 speedtest
 exit 0
