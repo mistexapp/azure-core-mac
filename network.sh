@@ -41,7 +41,7 @@ user_city=$(echo $resp | python3 -c "import sys, json; print(json.load(sys.stdin
 user_country=$(echo $resp | python3 -c "import sys, json; print(json.load(sys.stdin)['server']['country'])")
 Local_ip=$(echo $resp | python3 -c "import sys, json; print(json.load(sys.stdin)['interface']['internalIp'])")
 Public_ip=$(echo $resp | python3 -c "import sys, json; print(json.load(sys.stdin)['interface']['externalIp'])")
-mac_addr=$(echo $resp | python3 -c "import sys, json; print(json.load(sys.stdin)['interface']['macAddr'])")
+mac_address=$(echo $resp | python3 -c "import sys, json; print(json.load(sys.stdin)['interface']['macAddr'])")
 
 
 if [ "$download_speed" = 0 ]; then
@@ -50,7 +50,7 @@ if [ "$download_speed" = 0 ]; then
     user_country=$(curl https://ipinfo.io/${Public_ip} | python3 -c "import sys, json; print(json.load(sys.stdin)['country'])" )
     user_city=$(curl https://ipinfo.io/${Public_ip} | python3 -c "import sys, json; print(json.load(sys.stdin)['city'])" )
     user_isp=$(curl https://ipinfo.io/${Public_ip} | python3 -c "import sys, json; print(json.load(sys.stdin)['org'])" )
-    mac_addr=$(ifconfig en0 | awk '/ether/{print $2}')
+    mac_address=$(ifconfig en0 | awk '/ether/{print $2}')
 fi
 
 if [ $download_speed = "" ]; then
@@ -64,7 +64,7 @@ fi
 generate()
 {
     cat <<EOF
-    Network,host=$SerialNumber version_network="$Version",download_speed="$download_speed",upload_speed="$upload_speed",user_isp="$user_isp",user_city="$user_city",user_country="$user_country",public_ip="$Public_ip",local_ip="$Local_ip",mac="$mac_addr" $timestamp
+    Network,host=$SerialNumber version_network="$Version",download_speed="$download_speed",upload_speed="$upload_speed",user_isp="$user_isp",user_city="$user_city",user_country="$user_country",public_ip="$Public_ip",local_ip="$Local_ip",mac_address="$mac_address" $timestamp
 EOF
 }
 
