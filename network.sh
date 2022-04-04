@@ -60,11 +60,27 @@ fi
 if [ $upload_speed = "" ]; then
     $upload_speed=0
 fi
+
+proxy_enabled=$(system_profiler SPNetworkDataType |  awk '/SOCKS Proxy Enabled/ {print $NF}' | awk 'NR==1{print $1}')
+proxy_server=$(system_profiler SPNetworkDataType |  awk '/SOCKS Proxy Server/ {print $NF}' | awk 'NR==1{print $1}')
+proxy_port=$(system_profiler SPNetworkDataType |  awk '/SOCKS Proxy Port/ {print $NF}' | awk 'NR==1{print $1}')
+if [[ "$proxy_server" == *"127.0.0.1"* ]]; then
+    proxy_server="${proxy_server}:${proxy_port}"
+else
+    proxy_server="Undefined"
+fi
+
+if [[ "$proxy_enabled" == *"Yes"* ]]; then
+    proxy_enabled="1"
+else
+    proxy_enabled="0"
+fi
+
 #_____________________________________________________________________________________________________________
 generate()
 {
     cat <<EOF
-    Network,host=$SerialNumber version_network="$Version",download_speed="$download_speed",upload_speed="$upload_speed",user_isp="$user_isp",user_city="$user_city",user_country="$user_country",public_ip="$Public_ip",local_ip="$Local_ip",mac_address="$mac_address" $timestamp
+    Network,host=$SerialNumber version_network="$Version",download_speed="$download_speed",upload_speed="$upload_speed",user_isp="$user_isp",user_city="$user_city",user_country="$user_country",public_ip="$Public_ip",local_ip="$Local_ip",mac_address="$mac_address",proxy_enabled="$proxy_enabled",proxy_server="$proxy_server" $timestamp
 EOF
 }
 
